@@ -46,7 +46,7 @@ const ChangePassword = () => {
       setLoading(false)
       setSuccess(true)
       setTimeout(() => {
-        navigate('/dashboard')
+        navigate('/')
       }, 2000)
     }, 1000)
   }
