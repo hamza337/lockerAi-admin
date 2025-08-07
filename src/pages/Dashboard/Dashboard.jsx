@@ -1,4 +1,18 @@
 import { useState, useEffect } from 'react'
+import {
+  UsersIcon,
+  UserIcon,
+  BuildingOfficeIcon,
+  DocumentTextIcon,
+  EnvelopeIcon,
+  CheckCircleIcon,
+  HandRaisedIcon,
+  ExclamationTriangleIcon,
+  XCircleIcon,
+  ClockIcon,
+  PencilSquareIcon,
+  ChartBarIcon
+} from '@heroicons/react/24/outline'
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -31,21 +45,21 @@ const Dashboard = () => {
   }, [])
 
   const statCards = [
-    { title: 'Total Users', value: stats.totalUsers, icon: '👥', color: 'bg-blue-500' },
-    { title: 'Athletes', value: stats.totalAthletes, icon: '🏃‍♂️', color: 'bg-green-500' },
-    { title: 'Brands', value: stats.totalBrands, icon: '🏢', color: 'bg-purple-500' },
-    { title: 'Active Contracts', value: stats.activeContracts, icon: '📋', color: 'bg-orange-500' },
-    { title: 'Pending Emails', value: stats.pendingEmails, icon: '📧', color: 'bg-red-500' }
+    { title: 'Total Users', value: stats.totalUsers, icon: UsersIcon, color: 'bg-blue-500' },
+    { title: 'Athletes', value: stats.totalAthletes, icon: UserIcon, color: 'bg-green-500' },
+    { title: 'Brands', value: stats.totalBrands, icon: BuildingOfficeIcon, color: 'bg-purple-500' },
+    { title: 'Active Contracts', value: stats.activeContracts, icon: DocumentTextIcon, color: 'bg-orange-500' },
+    { title: 'Pending Emails', value: stats.pendingEmails, icon: EnvelopeIcon, color: 'bg-red-500' }
   ]
 
   const getActivityIcon = (type) => {
     switch (type) {
-      case 'contract_signed': return '✅'
-      case 'user_joined': return '👋'
-      case 'contract_ending': return '⚠️'
-      case 'brand_joined': return '🏢'
-      case 'contract_ended': return '❌'
-      default: return '📝'
+      case 'contract_signed': return CheckCircleIcon
+      case 'user_joined': return HandRaisedIcon
+      case 'contract_ending': return ExclamationTriangleIcon
+      case 'brand_joined': return BuildingOfficeIcon
+      case 'contract_ended': return XCircleIcon
+      default: return PencilSquareIcon
     }
   }
 
@@ -72,25 +86,28 @@ const Dashboard = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-        {statCards.map((stat, index) => (
-          <div key={index} className="card">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className={`w-8 h-8 ${stat.color} rounded-lg flex items-center justify-center`}>
-                  <span className="text-white text-lg">{stat.icon}</span>
+        {statCards.map((stat, index) => {
+          const IconComponent = stat.icon
+          return (
+            <div key={index} className="card">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <div className={`w-8 h-8 ${stat.color} rounded-lg flex items-center justify-center`}>
+                    <IconComponent className="h-5 w-5 text-white" />
+                  </div>
+                </div>
+                <div className="ml-5 w-0 flex-1">
+                  <dl>
+                    <dt className="text-sm font-medium text-gray-500 truncate">{stat.title}</dt>
+                    <dd className="text-lg font-semibold text-gray-900">
+                      {stat.value.toLocaleString()}
+                    </dd>
+                  </dl>
                 </div>
               </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">{stat.title}</dt>
-                  <dd className="text-lg font-semibold text-gray-900">
-                    {stat.value.toLocaleString()}
-                  </dd>
-                </dl>
-              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* Charts and Recent Activity */}
@@ -101,7 +118,7 @@ const Dashboard = () => {
           <div className="space-y-3">
             <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
               <div className="flex items-center">
-                <span className="text-lg mr-3">👤</span>
+                <UserIcon className="h-5 w-5 text-gray-600 mr-3" />
                 <div>
                   <div className="font-medium text-gray-900">Add New User</div>
                   <div className="text-sm text-gray-500">Create athlete or brand account</div>
@@ -110,7 +127,7 @@ const Dashboard = () => {
             </button>
             <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
               <div className="flex items-center">
-                <span className="text-lg mr-3">📧</span>
+                <EnvelopeIcon className="h-5 w-5 text-gray-600 mr-3" />
                 <div>
                   <div className="font-medium text-gray-900">Send Support Email</div>
                   <div className="text-sm text-gray-500">Contact users directly</div>
@@ -119,7 +136,7 @@ const Dashboard = () => {
             </button>
             <button className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
               <div className="flex items-center">
-                <span className="text-lg mr-3">📊</span>
+                <ChartBarIcon className="h-5 w-5 text-gray-600 mr-3" />
                 <div>
                   <div className="font-medium text-gray-900">View Reports</div>
                   <div className="text-sm text-gray-500">Platform analytics and insights</div>
@@ -145,8 +162,11 @@ const Dashboard = () => {
                     )}
                     <div className="relative flex space-x-3">
                       <div>
-                        <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white ${getActivityColor(activity.type)}`}>
-                          {getActivityIcon(activity.type)}
+                        <span className={`h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white bg-white ${getActivityColor(activity.type)}`}>
+                          {(() => {
+                            const IconComponent = getActivityIcon(activity.type)
+                            return <IconComponent className="h-4 w-4" />
+                          })()}
                         </span>
                       </div>
                       <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
@@ -173,7 +193,7 @@ const Dashboard = () => {
           <div className="bg-green-50 p-4 rounded-lg">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <span className="text-green-600 text-2xl">✅</span>
+                <CheckCircleIcon className="h-8 w-8 text-green-600" />
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-green-800">Active Contracts</p>
@@ -184,7 +204,7 @@ const Dashboard = () => {
           <div className="bg-yellow-50 p-4 rounded-lg">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <span className="text-yellow-600 text-2xl">⏰</span>
+                <ClockIcon className="h-8 w-8 text-yellow-600" />
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-yellow-800">Expiring Soon</p>
@@ -195,7 +215,7 @@ const Dashboard = () => {
           <div className="bg-blue-50 p-4 rounded-lg">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <span className="text-blue-600 text-2xl">📝</span>
+                <PencilSquareIcon className="h-8 w-8 text-blue-600" />
               </div>
               <div className="ml-3">
                 <p className="text-sm font-medium text-blue-800">Pending Approval</p>

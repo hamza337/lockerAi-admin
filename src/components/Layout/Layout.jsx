@@ -1,17 +1,41 @@
 import { useState } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
+import {
+  ChartBarIcon,
+  UsersIcon,
+  EnvelopeIcon,
+  CreditCardIcon,
+  ClipboardDocumentListIcon,
+  Bars3Icon,
+  XMarkIcon
+} from '@heroicons/react/24/outline'
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
-  const navigation = [
-    { name: 'Dashboard', href: '/', icon: '📊' },
-    { name: 'User Management', href: '/users', icon: '👥' },
-    { name: 'Support Email', href: '/support-email', icon: '📧' },
-    { name: 'Subscriptions', href: '/subscriptions', icon: '💳' },
-    { name: 'Activity Logs', href: '/activity-logs', icon: '📋' },
+  const navigationSections = [
+    {
+      title: 'Overview',
+      items: [
+        { name: 'Dashboard', href: '/', icon: ChartBarIcon },
+      ]
+    },
+    {
+      title: 'Management',
+      items: [
+        { name: 'User Management', href: '/users', icon: UsersIcon },
+        { name: 'Subscriptions', href: '/subscriptions', icon: CreditCardIcon },
+      ]
+    },
+    {
+      title: 'Administration',
+      items: [
+        { name: 'Support Email', href: '/support-email', icon: EnvelopeIcon },
+        { name: 'Activity Logs', href: '/activity-logs', icon: ClipboardDocumentListIcon },
+      ]
+    }
   ]
 
   const handleLogout = () => {
@@ -32,28 +56,40 @@ const Layout = () => {
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close sidebar</span>
-              <span className="text-white text-xl">×</span>
+              <XMarkIcon className="h-6 w-6 text-white" />
             </button>
           </div>
           <div className="h-0 flex-1 overflow-y-auto pt-5 pb-4">
             <div className="flex flex-shrink-0 items-center px-4">
               <h1 className="text-xl font-bold text-gray-900">LockerAI Admin</h1>
             </div>
-            <nav className="mt-5 space-y-1 px-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
-                    location.pathname === item.href
-                      ? 'bg-blue-100 text-blue-900'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                  onClick={() => setSidebarOpen(false)}
-                >
-                  <span className="mr-3 text-lg">{item.icon}</span>
-                  {item.name}
-                </Link>
+            <nav className="mt-5 px-2">
+              {navigationSections.map((section, sectionIndex) => (
+                <div key={section.title} className={sectionIndex > 0 ? 'mt-6' : ''}>
+                  <h3 className="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                    {section.title}
+                  </h3>
+                  <div className="space-y-1">
+                    {section.items.map((item) => {
+                      const IconComponent = item.icon
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
+                            location.pathname === item.href
+                              ? 'bg-blue-100 text-blue-900'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                          }`}
+                          onClick={() => setSidebarOpen(false)}
+                        >
+                          <IconComponent className="mr-3 h-5 w-5" />
+                          {item.name}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
               ))}
             </nav>
           </div>
@@ -67,20 +103,32 @@ const Layout = () => {
             <div className="flex flex-shrink-0 items-center px-4">
               <h1 className="text-xl font-bold text-gray-900"><i>LockerAI Admin</i></h1>
             </div>
-            <nav className="mt-5 flex-1 space-y-1 px-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                    location.pathname === item.href
-                      ? 'bg-blue-100 text-blue-900'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <span className="mr-3 text-lg">{item.icon}</span>
-                  {item.name}
-                </Link>
+            <nav className="mt-5 flex-1 px-2">
+              {navigationSections.map((section, sectionIndex) => (
+                <div key={section.title} className={sectionIndex > 0 ? 'mt-6' : ''}>
+                  <h3 className="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                    {section.title}
+                  </h3>
+                  <div className="space-y-1">
+                    {section.items.map((item) => {
+                      const IconComponent = item.icon
+                      return (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                            location.pathname === item.href
+                              ? 'bg-blue-100 text-blue-900'
+                              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                          }`}
+                        >
+                          <IconComponent className="mr-3 h-5 w-5" />
+                          {item.name}
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </div>
               ))}
             </nav>
           </div>
@@ -98,7 +146,7 @@ const Layout = () => {
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <span className="text-xl">☰</span>
+              <Bars3Icon className="h-6 w-6" />
             </button>
             
             <div className="flex-1"></div>
