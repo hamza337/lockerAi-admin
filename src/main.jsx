@@ -16,6 +16,7 @@ import ChangePassword from './pages/Auth/ChangePassword'
 // Admin Pages
 import Dashboard from './pages/Dashboard/Dashboard'
 import UserManagement from './pages/UserManagement/UserManagement'
+import ChatManagement from './pages/ChatManagement/ChatManagement'
 import SupportEmail from './pages/SupportEmail/SupportEmail'
 import SubscriptionManagement from './pages/SubscriptionManagement/SubscriptionManagement'
 import ActivityLogs from './pages/ActivityLogs/ActivityLogs'
@@ -36,6 +37,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="chats" element={<ChatManagement />} />
           <Route path="support-email" element={<SupportEmail />} />
           <Route path="subscriptions" element={<SubscriptionManagement />} />
           <Route path="activity-logs" element={<ActivityLogs />} />

@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   ChartBarIcon,
   UsersIcon,
+  ChatBubbleLeftRightIcon,
   EnvelopeIcon,
   CreditCardIcon,
   ClipboardDocumentListIcon,
@@ -26,6 +27,7 @@ const Layout = () => {
       title: 'Management',
       items: [
         { name: 'User Management', href: '/users', icon: UsersIcon },
+        { name: 'Chat Management', href: '/chats', icon: ChatBubbleLeftRightIcon },
         { name: 'Subscriptions', href: '/subscriptions', icon: CreditCardIcon },
       ]
     },
